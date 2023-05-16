@@ -7,31 +7,16 @@ import {
   AiOutlineLoading3Quarters,
 } from "react-icons/ai";
 import { listenForOutsideClicks } from "../assets/outSideClickHandler";
+import useCurrencies from "../hooks/useCurrencies";
 
 function Dropdown() {
+  const { data: supportedCurrencies, error, isLoading } = useCurrencies();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [listening, setListening] = useState(false);
 
   const dropDownRef = useRef<HTMLDivElement>(null);
-
-  const fetchSupportedCurrencies = () => {
-    setIsLoading(true);
-    return axios
-      .get<string[]>(
-        "https://api.coingecko.com/api/v3/simple/supported_vs_currencies"
-      )
-      .then((res) => {
-        setIsLoading(false);
-        return res.data;
-      });
-  };
-
-  const { data: supportedCurrencies, error } = useQuery<string[], Error>({
-    queryKey: ["supportedCurrencies"],
-    queryFn: fetchSupportedCurrencies,
-  });
 
   useEffect(
     listenForOutsideClicks(listening, setListening, dropDownRef, setIsOpen)
