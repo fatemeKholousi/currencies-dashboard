@@ -3,7 +3,6 @@ import axios from 'axios';
 import React from 'react'
 
 function useCurrencies() {
-  
     const fetchSupportedCurrencies = () => {
         return axios
           .get<string[]>(

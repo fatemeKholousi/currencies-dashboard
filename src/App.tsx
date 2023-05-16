@@ -1,5 +1,5 @@
 import Dropdown from "./components/Dropdown";
-import CoinCards from "./components/CoinCards";
+import CoinsTable from "./components/CoinsTable";
 import { useState } from "react";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
               }
             />
           </div>
-          <CoinCards selectedCurrency={selectedCurrency} selectedPage={page} />
+          <CoinsTable selectedCurrency={selectedCurrency} selectedPage={page} />
         </div>
       </div>
       <div className="flex justify-center gap-4 my-6 ">
