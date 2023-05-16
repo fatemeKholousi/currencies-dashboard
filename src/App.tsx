@@ -1,38 +1,50 @@
 import Dropdown from "./components/Dropdown";
 import CoinsTable from "./components/CoinsTable";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [selectedCurrency, setSelectedCurrency] = useState("usd");
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  const pageNumbers = Array.from({ length: 10 }, (v, index: number) => index);
+  useEffect(() => {
+    setPage(1);
+  }, [selectedCurrency]);
+
   return (
-    <>
-      <div className="flex justify-center">
-        <div className="flex flex-col items-start">
-          <div className="ml-4 my-4">
-            <Dropdown
-              selectedCurrency={selectedCurrency}
-              onChangeCurrency={(selected: string) =>
-                setSelectedCurrency(selected)
-              }
-            />
-          </div>
-          <CoinsTable selectedCurrency={selectedCurrency} selectedPage={page} />
+    <div>
+      <div className="flex flex-col items-center">
+        <div className="my-4">
+          <Dropdown
+            selectedCurrency={selectedCurrency}
+            onChangeCurrency={(selected: string) => setSelectedCurrency(selected)}
+          />
         </div>
+        <h4>You are in page number {page}</h4>
+        <CoinsTable
+          setLoadingTable={(loading: boolean) => setLoading(loading)}
+          selectedCurrency={selectedCurrency}
+          selectedPage={page}
+        />
       </div>
+
       <div className="flex justify-center gap-4 my-6 ">
-        {pageNumbers?.map((item) => (
-          <div
-            onClick={() => setPage(item + 1)}
-            className="border px-4 bg-gray-200 rounded-md cursor-pointer font-medium"
-          >
-            {item + 1}
-          </div>
-        ))}
+        <button
+          className="rounded-lg bg-gray-500 px-4 py-2 font-bold text-gray-200"
+          disabled={loading || page === 1}
+          onClick={() => setPage(page - 1)}
+        >
+          Prev
+        </button>
+        <button
+          disabled={loading}
+          className="rounded-lg bg-gray-500 px-4 py-2 font-bold text-gray-200"
+          onClick={() => setPage(page + 1)}
+        >
+          Next
+        </button>
       </div>
-    </>
+    </div>
   );
 }
 
