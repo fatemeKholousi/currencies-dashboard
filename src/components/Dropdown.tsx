@@ -1,22 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { listenForOutsideClicks } from "../assets/outSideClickHandler";
 import useCurrencies from "../hooks/useCurrencies";
+import { IDropDownProps } from "../interfaces/IDropDownProps";
 
-interface IDropDownProps {
-  selectedCurrency: string;
-  onChangeCurrency: (value: string) => void;
-}
 function Dropdown({ selectedCurrency, onChangeCurrency }: IDropDownProps) {
   const { data: supportedCurrencies, error, isLoading } = useCurrencies();
-
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [listening, setListening] = useState(false);
-
   const dropDownRef = useRef<HTMLDivElement>(null);
-
   useEffect(listenForOutsideClicks(listening, setListening, dropDownRef, setIsOpen));
 
   return (
