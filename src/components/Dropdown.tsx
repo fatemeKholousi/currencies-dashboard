@@ -4,7 +4,7 @@ import { listenForOutsideClicks } from "../assets/outSideClickHandler";
 import useCurrencies from "../hooks/useCurrencies";
 import { IDropDownProps } from "../interfaces/IDropDownProps";
 
-function Dropdown({ selectedCurrency, onChangeCurrency }: IDropDownProps) {
+const Dropdown = ({ selectedCurrency, onChangeCurrency }: IDropDownProps) => {
   const { data: supportedCurrencies, error, isLoading } = useCurrencies();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [listening, setListening] = useState(false);
@@ -48,6 +48,6 @@ function Dropdown({ selectedCurrency, onChangeCurrency }: IDropDownProps) {
       )}
     </div>
   );
-}
+};
 
 export default Dropdown;
